@@ -1,0 +1,25 @@
+.filter_box {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.input_box {
+    border-radius: 0.3rem;
+    background-color: lightgray;
+    padding: 0.5rem;
+    width: 60%;
+    margin-right: 0.5rem;
+}
+
+.input_box:focus {
+    outline: none;
+    background-color: white;
+    border: 1px solid lightblue;
+}
+
+.select_box {
+    width: 40%;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    cursor: pointer;
+}

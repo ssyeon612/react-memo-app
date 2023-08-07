@@ -6,7 +6,7 @@ ${reset}
   * {
     box-sizing: border-box;
   }
-
+  
   html, body {
     height: 100%;
     font-family: 'Noto Sans KR', sans-serif;
@@ -16,7 +16,6 @@ ${reset}
 
   #root, .App {
     height: inherit;
-    background-color: '#9E9FA5'
   }
 
   a {

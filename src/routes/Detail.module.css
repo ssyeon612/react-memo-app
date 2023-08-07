@@ -1,0 +1,29 @@
+.input_box {
+    width: 80%;
+    /* background-color: lightgrey; */
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.input_box:focus {
+    background-color: white;
+    outline: none;
+    border: 1px solid lightblue;
+}
+
+.textarea {
+    width: 90%;
+    height: 250px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+.textarea:focus {
+    outline: none;
+    border: 1px solid lightblue;
+}
+
+.right {
+    margin-left: auto;
+}
