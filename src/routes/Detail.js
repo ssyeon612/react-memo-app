@@ -12,15 +12,28 @@ function Detail() {
     const changeTitle = (e) => setTitle(e.target.value);
     const changeContents = (e) => setContents(e.target.value);
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-        const data = {
-            id: noteList.length + 1,
+    const saveNote = () => {
+        let data = {
             title,
             contents,
+            date: new Date(),
         };
-        const list = [data, ...noteList];
-        localStorage.setItem("note-list", JSON.stringify(list));
+        let newList = noteList;
+        if (!id) {
+            newList.push(data);
+        } else {
+            noteList[id] = data;
+        }
+        console.log(JSON.stringify(newList));
+        localStorage.setItem("note-list", JSON.stringify(newList));
+        navigate(-1);
+    };
+
+    const deleteNote = () => {
+        const filtered = noteList.filter((val, idx, arr) => {
+            if (idx != id) return arr;
+        });
+        localStorage.setItem("note-list", JSON.stringify(filtered));
         navigate(-1);
     };
 
@@ -29,7 +42,7 @@ function Detail() {
     };
 
     useEffect(() => {
-        const note = noteList.find((item) => item.id == id);
+        const note = noteList[id];
         if (note) {
             setTitle(note.title);
             setContents(note.contents);
@@ -41,14 +54,18 @@ function Detail() {
             <button className="btn" onClick={goBack}>
                 Back
             </button>
-            <form onSubmit={onSubmit}>
+            <div>
                 <input className={styles.input_box} type="text" onChange={changeTitle} value={title} />
                 <textarea className={styles.textarea} rows="5" onChange={changeContents} value={contents} />
                 <div className="btn_wrap">
-                    <button className={`btn btn_warn`}>Delete</button>
-                    <button className={`btn ${styles.right}`}>Save</button>
+                    <button className={`btn btn_warn`} onClick={deleteNote}>
+                        Delete
+                    </button>
+                    <button className={`btn ${styles.right}`} onClick={saveNote}>
+                        Save
+                    </button>
                 </div>
-            </form>
+            </div>
         </div>
     );
 }

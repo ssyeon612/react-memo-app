@@ -6,27 +6,53 @@ import { useEffect, useState } from "react";
 
 function Home() {
     const [notes, setNotes] = useState([]);
+    const noteList = localStorage.getItem("note-list");
 
-    const sortList = (value) => {
-        const sortList = [...notes].sort((a, b) => (a.title > b.title ? 1 : -1));
-        setNotes(sortList);
+    const sortList = (type) => {
+        let newList = [];
+        switch (type) {
+            case "DATE":
+                newList = JSON.parse(noteList).reverse();
+                break;
+            case "NAME":
+                newList = [...notes].sort((a, b) => (a.title > b.title ? 1 : -1));
+                break;
+        }
+        setNotes(newList);
+    };
+
+    const search = (text) => {
+        if (!text) return notes;
+        const filtered = notes.filter((item) => {
+            return item.title.includes(text);
+        });
+        setNotes(filtered);
     };
     useEffect(() => {
-        setNotes(JSON.parse(localStorage.getItem("note-list")));
+        if (noteList) {
+            setNotes(JSON.parse(noteList).reverse());
+        }
     }, []);
     return (
         <div>
-            <Filter sort={sortList} />
-            <ul className={styles.list_box}>
-                {notes.map((note) => (
-                    <Link key={note.id} to={`/detail/${note.id}`}>
-                        <li className={styles.list__item}>
-                            <h3 className={styles.title}>{note.title}</h3>
-                            <p className={styles.contents}>con</p>
-                        </li>
-                    </Link>
-                ))}
-            </ul>
+            <Filter search={search} sort={sortList} />
+            {notes.length < 1 ? (
+                <div className={styles.empty}>
+                    <h3>no data</h3>
+                </div>
+            ) : (
+                <ul className={styles.list_box}>
+                    {notes.map((note, index) => (
+                        <Link key={index} to={`/detail/${index}`}>
+                            <li className={styles.list__item}>
+                                <h3 className={styles.title}>{note.title}</h3>
+                                <p className={styles.contents}>{note.contents}</p>
+                            </li>
+                        </Link>
+                    ))}
+                </ul>
+            )}
+
             <div className="btn_wrap">
                 <Link to={"/detail"}>
                     <button className={`btn ${styles.btn}`}>Create Note</button>
