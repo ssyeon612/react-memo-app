@@ -20,7 +20,7 @@ function Detail() {
         };
         let newList = noteList;
         if (!id) {
-            newList.push(data);
+            newList.unshift(data);
         } else {
             noteList[id] = data;
         }

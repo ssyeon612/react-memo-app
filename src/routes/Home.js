@@ -12,7 +12,7 @@ function Home() {
         let newList = [];
         switch (type) {
             case "DATE":
-                newList = JSON.parse(noteList).reverse();
+                newList = [...notes].sort((a, b) => (a.date < b.date ? 1 : -1));
                 break;
             case "NAME":
                 newList = [...notes].sort((a, b) => (a.title > b.title ? 1 : -1));
@@ -22,16 +22,14 @@ function Home() {
     };
 
     const search = (text) => {
-        if (!text) return notes;
-        const filtered = notes.filter((item) => {
+        const filtered = JSON.parse(noteList).filter((item) => {
             return item.title.includes(text);
         });
         setNotes(filtered);
     };
+
     useEffect(() => {
-        if (noteList) {
-            setNotes(JSON.parse(noteList).reverse());
-        }
+        setNotes(JSON.parse(noteList));
     }, []);
     return (
         <div>
