@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
+import { v4 as uuidv4 } from "uuid";
 
 function Detail() {
     let navigate = useNavigate();
     const { id } = useParams();
-    const [note, setNote] = useState(null);
-    const [title, setTitle] = useState("");
-    const [contents, setContents] = useState("");
+    const [note, setNote] = useState({ title: "", contents: "" });
     const noteList = JSON.parse(localStorage.getItem("note-list")) || [];
 
-    const changeTitle = (e) => setTitle(e.target.value);
-    const changeContents = (e) => setContents(e.target.value);
+    const changeTitle = (e) => setNote({ ...note, title: e.target.value });
+    const changeContents = (e) => setNote({ ...note, contents: e.target.value });
 
     const saveNote = () => {
-        const temp = uuidv4();
-        console.log("note :: {}", temp);
         let data = {
-            title,
-            contents,
-            createdAt: id ? noteList[id].createdAt : new Date(),
+            id: id ? id : uuidv4(),
+            title: note.title,
+            contents: note.contents,
+            createdAt: id ? note.createdAt : new Date(),
             updatedAt: new Date(),
         };
         let newList = noteList;
@@ -28,7 +26,8 @@ function Detail() {
             newList.unshift(data);
         } else {
             // modifiy note
-            noteList[id] = data;
+            const filtered = noteList.filter((val) => val.id != note.id);
+            newList = [data, ...filtered];
         }
         localStorage.setItem("note-list", JSON.stringify(newList));
         navigate(-1);
@@ -36,7 +35,7 @@ function Detail() {
 
     const deleteNote = () => {
         const filtered = noteList.filter((val, idx, arr) => {
-            if (idx != id) return arr;
+            if (val.id != id) return arr;
         });
         localStorage.setItem("note-list", JSON.stringify(filtered));
         navigate(-1);
@@ -47,12 +46,9 @@ function Detail() {
     };
 
     useEffect(() => {
-        const note = noteList[id];
-        if (note) {
-            setNote(note);
-            console.log(note);
-            setTitle(note.title);
-            setContents(note.contents);
+        if (id) {
+            const found = noteList.find((item) => item.id === id);
+            setNote(found);
         }
     }, []);
 
@@ -62,8 +58,8 @@ function Detail() {
                 &#60; Back
             </button>
             <div>
-                <input className={styles.input_box} type="text" onChange={changeTitle} value={title} placeholder="note title" />
-                <textarea className={styles.textarea} rows="5" onChange={changeContents} value={contents} placeholder="enter note content" />
+                <input className={styles.input_box} type="text" onChange={changeTitle} value={note.title} placeholder="note title" />
+                <textarea className={styles.textarea} rows="5" onChange={changeContents} value={note.contents} placeholder="enter note content" />
                 <div className="btn_wrap">
                     {id && (
                         <button className={`btn btn_warn`} onClick={deleteNote}>

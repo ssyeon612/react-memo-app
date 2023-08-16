@@ -32,9 +32,11 @@ function Home() {
     };
 
     useEffect(() => {
-        setNotes(JSON.parse(noteList));
+        if (noteList) {
+            setNotes(JSON.parse(noteList));
+        }
     }, []);
-    
+
     return (
         <div>
             <Filter search={search} sort={sortList} />
@@ -44,8 +46,8 @@ function Home() {
                 </div>
             ) : (
                 <ul className={styles.list_box}>
-                    {notes.map((note, index) => (
-                        <Link key={index} to={`/detail/${index}`}>
+                    {notes.map((note) => (
+                        <Link key={note.id} to={`/detail/${note.id}`}>
                             <li className={styles.list__item}>
                                 <h3 className={styles.title}>{note.title}</h3>
                                 <p className={styles.contents}>{note.contents}</p>
