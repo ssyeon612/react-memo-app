@@ -34,3 +34,11 @@
     justify-content: center;
     height: 280px;
 }
+
+.btn_wrap {
+    margin-top: 1rem;
+}
+
+.btn_wrap > a {
+    width: 100%;
+}

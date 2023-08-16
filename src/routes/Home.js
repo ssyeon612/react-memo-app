@@ -8,13 +8,16 @@ function Home() {
     const [notes, setNotes] = useState([]);
     const noteList = localStorage.getItem("note-list");
 
-    const sortList = (type) => {
+    const sortList = (sortBy) => {
         let newList = [];
-        switch (type) {
-            case "DATE":
-                newList = [...notes].sort((a, b) => (a.date < b.date ? 1 : -1));
+        switch (sortBy) {
+            case "edited":
+                newList = [...notes].sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
                 break;
-            case "NAME":
+            case "created":
+                newList = [...notes].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+                break;
+            case "alphabet":
                 newList = [...notes].sort((a, b) => (a.title > b.title ? 1 : -1));
                 break;
         }
@@ -23,7 +26,7 @@ function Home() {
 
     const search = (text) => {
         const filtered = JSON.parse(noteList).filter((item) => {
-            return item.title.includes(text);
+            return item.title.includes(text) || item.contents.includes(text);
         });
         setNotes(filtered);
     };
@@ -31,6 +34,7 @@ function Home() {
     useEffect(() => {
         setNotes(JSON.parse(noteList));
     }, []);
+    
     return (
         <div>
             <Filter search={search} sort={sortList} />
@@ -51,7 +55,7 @@ function Home() {
                 </ul>
             )}
 
-            <div className="btn_wrap">
+            <div className={styles.btn_wrap}>
                 <Link to={"/detail"}>
                     <button className={`btn ${styles.btn}`}>Create Note</button>
                 </Link>

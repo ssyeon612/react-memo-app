@@ -6,10 +6,11 @@ const Filter = ({ search, sort }) => {
 
     return (
         <div className={styles.filter_box}>
-            <input className={styles.input_box} type="text" placeholder="Search Title" onChange={handleSearchInput} />
+            <input className={styles.input_box} type="text" placeholder="search" onChange={handleSearchInput} />
             <select className={styles.select_box} onChange={handleChangeSelect}>
-                <option value="DATE">Last updated</option>
-                <option value="NAME">Name</option>
+                <option value="edited">last edited</option>
+                <option value="created">recently created</option>
+                <option value="alphabet">alphabetical</option>
             </select>
         </div>
     );
