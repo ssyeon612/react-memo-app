@@ -1,40 +1,52 @@
 import { Link } from "react-router-dom";
-
 import Filter from "../components/Filter";
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 
-function Home() {
-    const [notes, setNotes] = useState([]);
-    const noteList = localStorage.getItem("note-list");
+type noteType = {
+    id: string;
+    title: string;
+    contents: string;
+    createdAt: Date;
+    updatedAt: Date;
+};
 
-    const sortList = (sortBy) => {
-        let newList = [];
+function Home() {
+    const [notes, setNotes] = useState<noteType[]>([]);
+
+    const sortList = (sortBy: string): void => {
+        let newList: noteType[] = [];
         switch (sortBy) {
             case "edited":
-                newList = [...notes].sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
+                newList = [...notes].sort((a: noteType, b: noteType) => (a.updatedAt < b.updatedAt ? 1 : -1));
                 break;
             case "created":
-                newList = [...notes].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+                newList = [...notes].sort((a: noteType, b: noteType) => (a.createdAt < b.createdAt ? 1 : -1));
                 break;
             case "alphabet":
-                newList = [...notes].sort((a, b) => (a.title > b.title ? 1 : -1));
+                newList = [...notes].sort((a: noteType, b: noteType) => (a.title > b.title ? 1 : -1));
                 break;
         }
         setNotes(newList);
     };
 
-    const search = (text) => {
-        const filtered = JSON.parse(noteList).filter((item) => {
+    const search = (text: string): void => {
+        renderNotes();
+        const filtered = notes.filter((item) => {
             return item.title.includes(text) || item.contents.includes(text);
         });
         setNotes(filtered);
     };
 
-    useEffect(() => {
+    const renderNotes = () => {
+        const noteList = localStorage.getItem("note-list");
         if (noteList) {
             setNotes(JSON.parse(noteList));
         }
+    };
+
+    useEffect(() => {
+        renderNotes();
     }, []);
 
     return (
@@ -46,7 +58,7 @@ function Home() {
                 </div>
             ) : (
                 <ul className={styles.list_box}>
-                    {notes.map((note) => (
+                    {notes.map((note: noteType) => (
                         <Link key={note.id} to={`/detail/${note.id}`}>
                             <li className={styles.list__item}>
                                 <h3 className={styles.title}>{note.title}</h3>
