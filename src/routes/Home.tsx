@@ -13,6 +13,7 @@ type noteType = {
 
 function Home() {
     const [notes, setNotes] = useState<noteType[]>([]);
+    const noteList = JSON.parse(localStorage.getItem("note-list") || "{}");
 
     const sortList = (sortBy: string): void => {
         let newList: noteType[] = [];
@@ -31,22 +32,14 @@ function Home() {
     };
 
     const search = (text: string): void => {
-        renderNotes();
-        const filtered = notes.filter((item) => {
+        const filtered = noteList.filter((item: noteType) => {
             return item.title.includes(text) || item.contents.includes(text);
         });
         setNotes(filtered);
     };
 
-    const renderNotes = () => {
-        const noteList = localStorage.getItem("note-list");
-        if (noteList) {
-            setNotes(JSON.parse(noteList));
-        }
-    };
-
     useEffect(() => {
-        renderNotes();
+        if (noteList) setNotes(noteList);
     }, []);
 
     return (
