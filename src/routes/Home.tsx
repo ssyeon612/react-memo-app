@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Filter from "../components/Filter";
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
+import Button from "../components/Button";
 
 type noteType = {
     id: string;
@@ -64,7 +65,8 @@ function Home() {
 
             <div className={styles.btn_wrap}>
                 <Link to={"/detail"}>
-                    <button className={`btn ${styles.btn}`}>Create Note</button>
+                    {/* <button className={`btn ${styles.btn}`}>Create Note</button> */}
+                    <Button $right>Create Note</Button>
                 </Link>
             </div>
         </div>

@@ -2,6 +2,31 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./Detail.module.css";
 import { v4 as uuidv4 } from "uuid";
+import Button from "../components/Button";
+import styled from "styled-components";
+
+const TitleInput = styled.input`
+    width: 100%;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    &:focus {
+        background-color: white;
+        outline: none;
+        border: 1px solid lightblue;
+    }
+`;
+
+const Textarea = styled.textarea`
+    width: 100%;
+    height: 250px;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    &:focus {
+        outline: none;
+        border: 1px solid lightblue;
+    }
+`;
 
 type noteType = {
     id: string;
@@ -70,22 +95,18 @@ function Detail() {
 
     return (
         <div>
-            <button className={`btn ${styles.back_btn}`} onClick={goBack}>
-                &#60; Back
-            </button>
+            <Button onClick={goBack}>&#60; Back</Button>
             <div>
-                <input className={styles.input_box} type="text" onChange={changeTitle} value={note.title} placeholder="note title" />
-                <textarea className={styles.textarea} rows={5} onChange={changeContents} value={note.contents} placeholder="enter note content" />
-                <div className="btn_wrap">
-                    {id && (
-                        <button className={`btn btn_warn`} onClick={deleteNote}>
-                            Delete
-                        </button>
-                    )}
-                    <button className={`btn ${styles.right}`} onClick={saveNote}>
-                        Save
-                    </button>
-                </div>
+                <TitleInput type="text" onChange={changeTitle} value={note.title} placeholder="note title" />
+                <Textarea rows={5} onChange={changeContents} value={note.contents} placeholder="enter note content" />
+                {id && (
+                    <Button onClick={deleteNote} color="#BB2525">
+                        Delete
+                    </Button>
+                )}
+                <Button $right onClick={saveNote}>
+                    Save
+                </Button>
             </div>
         </div>
     );

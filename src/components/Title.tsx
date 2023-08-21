@@ -1,11 +1,21 @@
 import styles from "./Title.module.css";
+import styled from "styled-components";
+
+const Header = styled.div`
+    margin-bottom: 1.5rem;
+    h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+    }
+`;
 
 const Title = () => {
     return (
-        <div className={styles.title}>
-            <h3 className={styles.title_header}>Note</h3>
+        <Header>
+            <h3>Note</h3>
             <p>Take your notes</p>
-        </div>
+        </Header>
     );
 };
 export default Title;
