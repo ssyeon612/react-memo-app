@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./Detail.module.css";
 import { v4 as uuidv4 } from "uuid";
 import Button from "../components/Button";
 import styled from "styled-components";

@@ -1,8 +1,38 @@
 import { Link } from "react-router-dom";
 import Filter from "../components/Filter";
-import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
+import styled from "styled-components";
+
+const Empty = styled.div`
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 280px;
+`;
+
+const ListBox = styled.ul`
+    height: 280px;
+    overflow-y: scroll;
+`;
+
+const ListItem = styled.li`
+    background-color: white;
+    padding: 0.8rem;
+    border-radius: 0.3rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    .ttl {
+        font-weight: 500;
+        margin-bottom: 0.3rem;
+    }
+    .con {
+        font-size: 0.8rem;
+    }
+`;
 
 type noteType = {
     id: string;
@@ -47,28 +77,25 @@ function Home() {
         <div>
             <Filter search={search} sort={sortList} />
             {notes.length < 1 ? (
-                <div className={styles.empty}>
+                <Empty>
                     <h3>no data</h3>
-                </div>
+                </Empty>
             ) : (
-                <ul className={styles.list_box}>
+                <ListBox>
                     {notes.map((note: noteType) => (
                         <Link key={note.id} to={`/detail/${note.id}`}>
-                            <li className={styles.list__item}>
-                                <h3 className={styles.title}>{note.title}</h3>
-                                <p className={styles.contents}>{note.contents}</p>
-                            </li>
+                            <ListItem>
+                                <h3 className="ttl">{note.title}</h3>
+                                <p className="con">{note.contents}</p>
+                            </ListItem>
                         </Link>
                     ))}
-                </ul>
+                </ListBox>
             )}
 
-            <div className={styles.btn_wrap}>
-                <Link to={"/detail"}>
-                    {/* <button className={`btn ${styles.btn}`}>Create Note</button> */}
-                    <Button $right>Create Note</Button>
-                </Link>
-            </div>
+            <Link to={"/detail"}>
+                <Button $right>Create Note</Button>
+            </Link>
         </div>
     );
 }

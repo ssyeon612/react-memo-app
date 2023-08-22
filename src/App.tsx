@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./App.css";
+import styled from "styled-components";
 
 import Title from "./components/Title";
 
@@ -7,10 +7,24 @@ import Title from "./components/Title";
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
 
+const Wrap = styled.div`
+    background-color: #a1c298;
+    display: flex;
+`;
+
+const Container = styled.div`
+    width: 350px;
+    height: 500px;
+    background-color: #ededed;
+    border-radius: 1.5rem;
+    margin: auto;
+    padding: 1.6rem;
+`;
+
 function App() {
     return (
-        <div className="App">
-            <div className="container">
+        <Wrap className="App">
+            <Container>
                 <Title />
                 <Router>
                     <Routes>
@@ -19,8 +33,8 @@ function App() {
                         <Route path="/detail/:id" element={<Detail />}></Route>
                     </Routes>
                 </Router>
-            </div>
-        </div>
+            </Container>
+        </Wrap>
     );
 }
 
