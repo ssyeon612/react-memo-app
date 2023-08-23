@@ -1,31 +1,31 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 
-import Title from "./components/Title";
-
 /* routes */
 import Home from "./routes/Home";
 import Detail from "./routes/Detail";
 
+import Bg from "./assets/images/bg.jpeg";
+
 const Wrap = styled.div`
-    background-color: #a1c298;
     display: flex;
+    background: url(${Bg}) no-repeat center;
+    background-size: cover;
 `;
 
 const Container = styled.div`
-    width: 350px;
-    height: 500px;
-    background-color: #ededed;
-    border-radius: 1.5rem;
+    width: 900px;
+    height: 650px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 3rem;
     margin: auto;
-    padding: 1.6rem;
+    padding: 2rem;
 `;
 
 function App() {
     return (
         <Wrap className="App">
             <Container>
-                <Title />
                 <Router>
                     <Routes>
                         <Route path="/" element={<Home />}></Route>

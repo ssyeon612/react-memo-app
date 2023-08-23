@@ -1,4 +1,3 @@
-import styles from "./Filter.module.css";
 import styled from "styled-components";
 
 const FilterWrap = styled.div`

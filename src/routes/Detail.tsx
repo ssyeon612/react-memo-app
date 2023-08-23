@@ -39,7 +39,7 @@ function Detail() {
     let navigate = useNavigate();
     const { id } = useParams();
     const [note, setNote] = useState<noteType>({ id: "", title: "", contents: "", createdAt: new Date(), updatedAt: new Date() });
-    let noteList: noteType[] = JSON.parse(localStorage.getItem("note-list") || "{}");
+    let noteList: noteType[] = JSON.parse(localStorage.getItem("note-list") || "[]");
 
     const changeTitle = (e: React.ChangeEvent<HTMLInputElement>) =>
         setNote((preveState) => {
